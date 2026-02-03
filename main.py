@@ -1,6 +1,6 @@
 from fastapi import FastAPI,Request
 from fastapi.templating import Jinja2Templates
-
+from fastapi.staticfiles import StaticFiles
 
 
 blogs:list[dict]=[
@@ -20,11 +20,14 @@ blogs:list[dict]=[
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/blog")
-def get_blogs(request:Request,):
-    return templates.TemplateResponse(request,"home.html",{"blogs":blogs,"title":"Home"})
+
+@app.get("/",include_in_schema=False,name="home")
+@app.get("/posts",include_in_schema=False,name="posts")
+def home(request:Request,):
+    return templates.TemplateResponse(request,"home.html",{"posts":blogs,"title":"Home"})
 
 
 
