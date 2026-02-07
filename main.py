@@ -3,19 +3,21 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 
 
-blogs:list[dict]=[
+blogs:list[dict]= [
     {
-        "id":1,
-        "author":"John Doe",
-        "title":"Blog 1",
-        "content":"Content of blog 1"
+        "id": 1,
+        "author": "Muhin Hassan",
+        "title": "FastAPI is Awesome",
+        "content": "This framework is really easy to use and super fast.",
+        "date_posted": "April 20, 2025",
     },
     {
-        "id":2,
-        "author":"Don Doe",
-        "title":"Blog 2",
-        "content":"Content of blog 2"
-    }
+        "id": 2,
+        "author": "Jane Doe",
+        "title": "Python is Great for Web Development",
+        "content": "Python is a great language for web development, and FastAPI makes it even better.",
+        "date_posted": "April 21, 2025",
+    },
 ]
 
 app = FastAPI()
@@ -31,7 +33,7 @@ def home(request:Request,):
 
 
 @app.get('/posts/{post_id}',include_in_schema=False,)
-def post(request:Request,post_id:int):
+def post_page(request:Request,post_id:int):
     for post in blogs:
         if post["id"] == post_id:
             title = post["title"][:50]
